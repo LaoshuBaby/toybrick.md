@@ -80,7 +80,7 @@ def markdown_entry(thesis_entry: dict):
     return markdown_row(len(data), data)
 
 
-def markdown_gen(locale: str):
+def markdown_body(length,data,locale: str): 
     thesis_json = open("..\\data\\thesis.json", "r", encoding="utf-8")
     thesis_data = json.loads(thesis_json.read())["CUTI"]
     column_json = open("..\\data\\column.json", "r", encoding="utf-8")
@@ -100,11 +100,11 @@ def markdown_gen(locale: str):
     return string
 
 
-def markdown_body(locale, text, token_begin, token_warn, token_end):
+def markdown_gen(locale, text, token_begin, token_warn, token_end):
     readme_slice = text.split(token_begin)
     readme_slice.append(readme_slice[1].split(token_warn)[0])
     readme_slice.append(readme_slice[1].split(token_end)[1])
-    table = markdown_gen(locale)
+    table = markdown_body(locale)
     markdown = (
         readme_slice[0]
         + token_begin
@@ -131,7 +131,7 @@ def readme_gen(readme_locale):
     readme_file = open(path, "r", encoding="utf-8")
     readme_text = readme_file.read()
     readme_file.close()
-    readme_text = markdown_body(
+    readme_text = markdown_gen(
         readme_locale, readme_text, syntax_1, syntax_2, syntax_3
     )
     readme_file = open(path, "w", encoding="utf-8")
