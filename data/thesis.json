@@ -1,0 +1,14 @@
+{
+  "CUTI": [
+    {
+      "package_name": "thuthesis",
+      "institution_name": "清华大学",
+      "maintainer_type": "组织",
+      "github_repository": "github.com/tuna/thuthesis",
+      "gitlab_repository": "",
+      "gitee_repository": "",
+      "ctan_package": "ctan.org/pkg/thuthesis",
+      "status": ""
+    }
+  ]
+}
