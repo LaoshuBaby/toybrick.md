@@ -1,1 +1,6 @@
-{}
+{
+  "overview_pic": {
+    "type": "image",
+    "content": "base64:123456789"
+  }
+}

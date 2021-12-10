@@ -1,0 +1,11 @@
+{
+  "foot_design_line": {
+    "type": "html",
+    "content": "<hr>"
+  },
+  "copyright_part": {
+    "type": "text",
+    "content": "Copyright © 2021, Thesis List",
+    "style": "font-size: 12px; font-weight: bold; text-align: center;"
+  }
+}
