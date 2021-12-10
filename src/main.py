@@ -122,7 +122,7 @@ def markdown_gen(locale, text, token_begin, token_warn, token_end):
         return markdown
 
 
-def readme_gen(readme_locale):
+def page_gen(readme_locale):
     if readme_locale != "":
         path = "..\\README" + "-" + readme_locale + ".md"
     else:
@@ -140,52 +140,38 @@ def readme_gen(readme_locale):
     print(readme_locale, ": ", path.replace("..\\", "").replace("../", ""))
 
 
-readme_gen("")
-readme_gen("zh-CN")
-readme_gen("en-US")
+page_gen("")
+page_gen("zh-CN")
+page_gen("en-US")
 
 
 ###### MAIN
 if __name__ == '__main__':
-    ARGUMENT_DICT = {"MODE": "NULL"}
-    STATUS = "VALUE"
+    argument_dict = {
+        "MODE": "NULL"
+    }
+    status = "VALUE"
     for i in range(len(sys.argv)):
-        if STATUS == "NAME":
+        if status == "NAME":
             if (i != 0) and (i + 1 <= len(sys.argv) - 1):
-                ARGUMENT_DICT.update({sys.argv[i].replace("--", "").upper(): sys.argv[i + 1].upper()})
+                argument_dict.update({sys.argv[i].replace("--", "").upper(): sys.argv[i + 1].upper()})
             elif i != 0:
-                ARGUMENT_DICT.update({sys.argv[i].replace("--", "").upper(): "NULL"})
+                argument_dict.update({sys.argv[i].replace("--", "").upper(): "NULL"})
             else:
-                ARGUMENT_DICT.update({"path": sys.argv[i]})
-            STATUS = "VALUE"
+                argument_dict.update({"path": sys.argv[i]})
+            status = "VALUE"
         else:
-            STATUS = "NAME"
-    print(ARGUMENT_DICT)
-    # 三千参数，我只取MODE饮
-    if ARGUMENT_DICT["MODE"] == "CLI":
-        while True:
-            print("==请输入您希望进入的模式==")
-            GLOBAL_MODE = input()
-            if eval(GLOBAL_MODE) == 1:
-                TEMP_RETURN = MODE_CREATE()
-            elif eval(GLOBAL_MODE) == 2:
-                TEMP_RETURN = MODE_INPUT()
-            elif eval(GLOBAL_MODE) == 3:
-                TEMP_RETURN = MODE_MERGE()
-            else:
-                TEMP_RETURN = 0
-                print("EXIT")
-                break
-    # elif ARGUMENT_DICT["mode"] == "GUI":
+            status = "NAME"
+    print(argument_dict)
+    # MODE
+    if argument_dict["MODE"] == "FULL_BUILD":
+        temp_return = build()
+    elif argument_dict["MODE"] == "SINGLE_LANGUAGE":
+        temp_return = 1
     else:
-        GLOBAL_MODE = "GUI_0"
-        TEMP_RETURN = 0
+        temp_return=0
 
 # 这段异常退出分析是对GUI和CLI共用的
-if GLOBAL_MODE == 1 and TEMP_RETURN == "ERROR_NONEXIST_QUANTITY":
-    print("退出原因：不存在的数量")
-if GLOBAL_MODE == 2 and TEMP_RETURN == "ERROR_NONEXIST_QUANTITY":
-    print("退出原因：不存在的数量")
-if GLOBAL_MODE == 3 and TEMP_RETURN == "ERROR_NONEXIST_QUANTITY":
-    print("退出原因：不存在的数量")
-quit(0)
+if temp_return == "ERROR_NONEXIST_LOCALE":
+    print("退出原因：不存在的语言")
+exit(0)
