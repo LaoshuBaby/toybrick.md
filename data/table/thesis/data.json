@@ -1,35 +1,35 @@
 {
-    "CUTI": [
+  "CUTI": [
+    {
+      "entry_id": "CUTI-3EE44B",
+      "i18n": [
         {
-            "entry_id": "CUTI-2B300D",
-            "i18n": [
-                {
-                    "locale": "zh-CN",
-                    "content": {
-                        "package_name": "thuthesis",
-                        "institution_name": "清华大学",
-                        "maintainer_type": "组织",
-                        "github_repository": "github.com/tuna/thuthesis",
-                        "gitlab_repository": "",
-                        "gitee_repository": "",
-                        "ctan_package": "ctan.org/pkg/thuthesis",
-                        "status": ""
-                    }
-                },
-                {
-                    "locale": "en-US",
-                    "content": {
-                        "package_name": "thuthesis",
-                        "institution_name": "Tsinghua University",
-                        "maintainer_type": "Organization",
-                        "github_repository": "github.com/tuna/thuthesis",
-                        "gitlab_repository": "",
-                        "gitee_repository": "",
-                        "ctan_package": "ctan.org/pkg/thuthesis",
-                        "status": ""
-                    }
-                }
-            ]
+          "locale": "zh-CN",
+          "content": {
+            "package_name": "thuthesis",
+            "institution_name": "清华大学",
+            "maintainer_type": "组织",
+            "github_repository": "github.com/tuna/thuthesis",
+            "gitlab_repository": "",
+            "gitee_repository": "",
+            "ctan_package": "ctan.org/pkg/thuthesis",
+            "status": ""
+          }
+        },
+        {
+          "locale": "en-US",
+          "content": {
+            "package_name": "thuthesis",
+            "institution_name": "Tsinghua University",
+            "maintainer_type": "Organization",
+            "github_repository": "github.com/tuna/thuthesis",
+            "gitlab_repository": "",
+            "gitee_repository": "",
+            "ctan_package": "ctan.org/pkg/thuthesis",
+            "status": ""
+          }
         }
-    ]
+      ]
+    }
+  ]
 }

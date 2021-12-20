@@ -2,11 +2,16 @@ import json
 import os.path
 import sys
 from functools import cmp_to_key
-from pprint import pprint
+import uuid
 
 syntax_1 = "<!-- MARKDOWN_TABLE BEGIN -->"
 syntax_2 = "<!-- WARNING: THIS TABLE IS MAINTAINED BY PROGRAMME, YOU SHOULD ADD DATA TO COLLECTION JSON -->"
 syntax_3 = "<!-- MARKDOWN_TABLE END -->"
+
+
+def random_id(x: int):
+    # 生成6位随机字符串
+    return str(uuid.uuid4()).replace("-", "").upper()[:x]
 
 
 def x_sort(data):
@@ -158,56 +163,52 @@ def build():
 def gen_id(content_type="table", content_name=""):
     if content_name == "":
         content_name = input("请输入数据名称：")
+    data_path = os.path.join(
+        __file__.replace("main.py", ""),
+        "..",
+        "data",
+        content_type,
+        content_name,
+        "data.json",
+    )
+    column_path = os.path.join(
+        __file__.replace("main.py", ""),
+        "..",
+        "data",
+        content_type,
+        content_name,
+        "column.json",
+    )
     data_file = open(
-        os.path.join(
-            __file__.replace("main.py", ""),
-            "..",
-            "data",
-            content_type,
-            content_name,
-            "data.json",
-        ),
+        data_path,
         "r",
         encoding="utf-8",
     )
     column_file = open(
-        os.path.join(
-            __file__.replace("main.py", ""),
-            "..",
-            "data",
-            content_type,
-            content_name,
-            "column.json",
-        ),
+        column_path,
         "r",
         encoding="utf-8",
     )
-    data_json=json.loads(data_file.read())
-    column_json=json.loads(column_file.read())
-    # pprint(data_json)
-    schema_id=column_json["schema_id"]
-    # print(data_json[schema_id][0]["entry_id"])
-    def random_id(x:int):
-        # 生成6位随机字符串
-        import uuid
-        return str(uuid.uuid4()).replace("-", "").upper()[:x]
+    data_json = json.loads(data_file.read())
+    column_json = json.loads(column_file.read())
+    schema_id = column_json["schema_id"]
+    print(data_json[schema_id][0]["entry_id"])
     for i in range(len(data_json[schema_id])):
-        data_json[schema_id][i]["entry_id"]=schema_id+"-"+random_id(6)
+        data_json[schema_id][i]["entry_id"] = schema_id + "-" + random_id(6)
     data_file.close()
     data_file = open(
-        os.path.join(
-            __file__.replace("main.py", ""),
-            "..",
-            "data",
-            content_type,
-            content_name,
-            "data.json",
-        ),
+        data_path,
         "w",
         encoding="utf-8",
     )
-    # data_file.write(json.dumps(data_json, ensure_ascii=False, indent=4))
-    data_file.write(json.dumps(data_json, ensure_ascii=False, indent=4))
+    data_file.write(
+        json.dumps(
+            data_json,
+            sort_keys=False,
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
     data_file.close()
     return 0
 
