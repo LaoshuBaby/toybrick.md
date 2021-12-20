@@ -2,6 +2,7 @@ import json
 import os.path
 import sys
 from functools import cmp_to_key
+from pprint import pprint
 
 syntax_1 = "<!-- MARKDOWN_TABLE BEGIN -->"
 syntax_2 = "<!-- WARNING: THIS TABLE IS MAINTAINED BY PROGRAMME, YOU SHOULD ADD DATA TO COLLECTION JSON -->"
@@ -82,7 +83,7 @@ def markdown_entry(row_entry: dict):
     return markdown_row(len(data), data)
 
 
-def markdown_body(length,data,locale: str): 
+def markdown_body(length, data, locale: str):
     thesis_json = open("..\\data\\thesis.json", "r", encoding="utf-8")
     thesis_data = json.loads(thesis_json.read())["CUTI"]
     column_json = open("..\\data\\column.json", "r", encoding="utf-8")
@@ -145,6 +146,7 @@ def page_gen(readme_locale):
     readme_file.close()
     print(readme_locale, ": ", path.replace("..\\", "").replace("../", ""))
 
+
 def build():
     # 未来build或许可以根据参数或者配置文件来队列生成
     page_gen("")
@@ -152,26 +154,67 @@ def build():
     page_gen("en-US")
     return 0
 
-def gen_id(data_type="table",data_name=""):
-    if data_name=="":
-        data_name=input("请输入数据名称：")
-    # data_file=open("data\\"+data_type+"\\"+data_name+"\\data.json","r",encoding="utf-8")
-    data_file=open(os.path.join(__file__,"data",data_type,data_name,"data.json"),"r",encoding="utf-8")
-    print(data_file.read())
+
+def gen_id(content_type="table", content_name=""):
+    if content_name == "":
+        content_name = input("请输入数据名称：")
+    data_file = open(
+        os.path.join(
+            __file__.replace("main.py", ""),
+            "..",
+            "data",
+            content_type,
+            content_name,
+            "data.json",
+        ),
+        "r",
+        encoding="utf-8",
+    )
+    column_file = open(
+        os.path.join(
+            __file__.replace("main.py", ""),
+            "..",
+            "data",
+            content_type,
+            content_name,
+            "column.json",
+        ),
+        "r",
+        encoding="utf-8",
+    )
+    data_json=json.loads(data_file.read())
+    column_json=json.loads(column_file.read())
+    # pprint(data_json)
+    schema_id=column_json["schema_id"]
+    # print(data_json[schema_id][0]["entry_id"])
+    def random_id(x:int):
+        # 生成6位随机字符串
+        import uuid
+        return str(uuid.uuid4()).replace("-", "").upper()[:x]
+    for i in range(len(data_json[schema_id])):
+        data_json[schema_id][i]["entry_id"]=schema_id+random_id(6)
     return 0
 
+
 ###### MAIN
-if __name__ == '__main__':
-    argument_dict = {
-        "MODE": "NULL"
-    }
+if __name__ == "__main__":
+    argument_dict = {"MODE": "NULL"}
     status = "VALUE"
     for i in range(len(sys.argv)):
         if status == "NAME":
             if (i != 0) and (i + 1 <= len(sys.argv) - 1):
-                argument_dict.update({sys.argv[i].replace("--", "").upper(): sys.argv[i + 1].upper()})
+                argument_dict.update(
+                    {
+                        sys.argv[i]
+                        .replace("--", "")
+                        .upper(): sys.argv[i + 1]
+                        .upper()
+                    }
+                )
             elif i != 0:
-                argument_dict.update({sys.argv[i].replace("--", "").upper(): "NULL"})
+                argument_dict.update(
+                    {sys.argv[i].replace("--", "").upper(): "NULL"}
+                )
             else:
                 argument_dict.update({"path": sys.argv[i]})
             status = "VALUE"
@@ -186,7 +229,7 @@ if __name__ == '__main__':
     elif argument_dict["MODE"] == "DATA_GEN_ID":
         temp_return = gen_id()
     else:
-        temp_return=0
+        temp_return = 0
 
 # 这段异常退出分析是对GUI和CLI共用的
 if temp_return == "ERROR_NONEXIST_LOCALE":
