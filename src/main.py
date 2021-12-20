@@ -1,4 +1,5 @@
 import json
+import sys
 from functools import cmp_to_key
 
 syntax_1 = "<!-- MARKDOWN_TABLE BEGIN -->"
@@ -66,16 +67,16 @@ def markdown_table(length: int):
     return markdown_row(length, data)
 
 
-def markdown_entry(thesis_entry: dict):
+def markdown_entry(row_entry: dict):
     data = [
-        thesis_entry["package_name"],
-        thesis_entry["institution_name"],
-        thesis_entry["maintainer_type"],
-        thesis_entry["github_repository"],
-        thesis_entry["gitlab_repository"],
-        thesis_entry["gitee_repository"],
-        thesis_entry["ctan_package"],
-        thesis_entry["status"],
+        row_entry["package_name"],
+        row_entry["institution_name"],
+        row_entry["maintainer_type"],
+        row_entry["github_repository"],
+        row_entry["gitlab_repository"],
+        row_entry["gitee_repository"],
+        row_entry["ctan_package"],
+        row_entry["status"],
     ]
     return markdown_row(len(data), data)
 
@@ -123,27 +124,36 @@ def markdown_gen(locale, text, token_begin, token_warn, token_end):
 
 
 def page_gen(readme_locale):
+    # 确定文件名
     if readme_locale != "":
         path = "..\\README" + "-" + readme_locale + ".md"
     else:
         readme_locale = "Default"
         path = "..\\README.md"
+    # 读取原始文件
     readme_file = open(path, "r", encoding="utf-8")
     readme_text = readme_file.read()
     readme_file.close()
+    # 把原始文件发送给生成函数（可能未来逐步分生成会在这里累积多层）
     readme_text = markdown_gen(
         readme_locale, readme_text, syntax_1, syntax_2, syntax_3
     )
+    # 写回文件
     readme_file = open(path, "w", encoding="utf-8")
     readme_file.write(readme_text)
     readme_file.close()
     print(readme_locale, ": ", path.replace("..\\", "").replace("../", ""))
 
+def build():
+    # 未来build或许可以根据参数或者配置文件来队列生成
+    page_gen("")
+    page_gen("zh-CN")
+    page_gen("en-US")
+    return 0
 
-page_gen("")
-page_gen("zh-CN")
-page_gen("en-US")
+def gen_id(data_type="table"):
 
+    return 0
 
 ###### MAIN
 if __name__ == '__main__':
@@ -168,6 +178,8 @@ if __name__ == '__main__':
         temp_return = build()
     elif argument_dict["MODE"] == "SINGLE_LANGUAGE":
         temp_return = 1
+    elif argument_dict["MODE"] == "DATA_GEN_ID":
+        temp_return = gen_id()
     else:
         temp_return=0
 

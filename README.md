@@ -11,6 +11,7 @@
 ## 技术细节
 
 1. column定义行列，并在构建前对data进行检查
+2. 所有table理论上都是sortable的
 
 ## 来源
 
