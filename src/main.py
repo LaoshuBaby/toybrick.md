@@ -193,6 +193,22 @@ def gen_id(content_type="table", content_name=""):
         return str(uuid.uuid4()).replace("-", "").upper()[:x]
     for i in range(len(data_json[schema_id])):
         data_json[schema_id][i]["entry_id"]=schema_id+random_id(6)
+    data_file.close()
+    data_file = open(
+        os.path.join(
+            __file__.replace("main.py", ""),
+            "..",
+            "data",
+            content_type,
+            content_name,
+            "data.json",
+        ),
+        "w",
+        encoding="utf-8",
+    )
+    # data_file.write(json.dumps(data_json, ensure_ascii=False, indent=4))
+    data_file.write(json.dumps(data_json, ensure_ascii=False, indent=4))
+    data_file.close()
     return 0
 
 
