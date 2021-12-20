@@ -1,4 +1,5 @@
 import json
+import os.path
 import sys
 from functools import cmp_to_key
 
@@ -151,8 +152,12 @@ def build():
     page_gen("en-US")
     return 0
 
-def gen_id(data_type="table"):
-
+def gen_id(data_type="table",data_name=""):
+    if data_name=="":
+        data_name=input("请输入数据名称：")
+    # data_file=open("data\\"+data_type+"\\"+data_name+"\\data.json","r",encoding="utf-8")
+    data_file=open(os.path.join(__file__,"data",data_type,data_name,"data.json"),"r",encoding="utf-8")
+    print(data_file.read())
     return 0
 
 ###### MAIN
