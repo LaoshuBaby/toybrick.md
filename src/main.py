@@ -224,8 +224,7 @@ if __name__ == "__main__":
                     {
                         sys.argv[i]
                         .replace("--", "")
-                        .upper(): sys.argv[i + 1]
-                        .upper()
+                        .upper(): sys.argv[i + 1].upper()
                     }
                 )
             elif i != 0:
