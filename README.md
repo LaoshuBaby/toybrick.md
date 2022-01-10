@@ -6,7 +6,7 @@
 2. 提供原生i18n支持，不同语言无需反复deploy，只要适时订正对应语言文档。API亦可矩阵式生成。
 3. 提供两种模板：**可序表格**与**API库**
 4. 支持带参启动来决定进入配置器还是构建器，允许本地手工运行或GH Action
-5. 预置多个常用模块，如CI badge等，无需手写，只需在json内指定内容和显示位置，自动为你添加，堪比```README.rst```
+5. 预置多个常用模块，如CI badge等，无需手写，只需在json内指定内容和显示位置，自动为你添加，堪比```README.rst```，亦支持如[```isitebao/standard-repository```](https://github.com/misitebao/standard-repository)之类的仓库模板，可供选择。
 
 ## 技术细节
 
