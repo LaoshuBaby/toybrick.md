@@ -31,3 +31,4 @@
 + mendersoftware/mender-docs
 + jedelman8/ansible-webdocs
 + raghakot/markdown-apidocs
++ jazzband/prettytable（Pypi上的[prettytable](https://pypi.org/project/prettytable/)）
